@@ -1,0 +1,10 @@
+# Secrets — never commit your real tokens
+.env
+
+# Maven build output
+target/
+
+# IDE files
+.idea/
+*.iml
+.vscode/
