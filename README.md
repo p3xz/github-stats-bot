@@ -17,6 +17,8 @@ Built in September 2026.
 
 ## What we used
 
+![Java](https://skillicons.dev/icons?i=java) ![Maven](https://skillicons.dev/icons?i=maven) ![GitHub](https://skillicons.dev/icons?i=github)
+
 - **Language:** Java 17
 - **Build:** Maven (single fat jar via the maven-shade-plugin, `Main-Class` set to `com.example.githubbot.Main`)
 - **Discord API:** JDA 5 (Java Discord API, slash commands + embeds)
