@@ -1,10 +1,21 @@
 # GitHub Stats Discord Bot (Java)
 
+## What
+
 A Discord bot that looks up GitHub accounts via the GitHub API and posts the
 info as an embed: account creation date, last public activity, followers,
 and (with a GitHub token) total stars/commits/PRs/issues in the last year.
 
-## Tech Stack
+## Why
+
+Built as a personal project to make GitHub stats checkable right inside a
+Discord server, without anyone having to open a browser.
+
+## When
+
+Built in September 2026.
+
+## What we used
 
 - **Language:** Java 17
 - **Build:** Maven (single fat jar via the maven-shade-plugin, `Main-Class` set to `com.example.githubbot.Main`)
@@ -13,6 +24,22 @@ and (with a GitHub token) total stars/commits/PRs/issues in the last year.
 - **JSON parsing:** Gson
 - **Logging:** SLF4J with the slf4j-simple backend
 - **Config:** `.env` file auto-loaded at startup (real environment variables take priority)
+
+## Why we used this
+
+- **Java 17:** the language the bot is written in, with current syntax for the command handlers and data models.
+- **JDA 5:** the standard Java wrapper for the Discord API; it handles slash command registration and rich embeds.
+- **OkHttp:** performs the bot's calls to the GitHub REST API (profiles, repos, languages) and the GitHub GraphQL API (contribution stats).
+- **Gson:** parses the JSON responses from GitHub into the objects the embeds are built from.
+- **Maven shade plugin:** bundles everything into one fat jar, so the bot runs anywhere Java is installed with a single `java -jar` command.
+- **SLF4J-simple:** lightweight logging at startup and on API failures.
+
+## How it works
+
+- A user runs a slash command in Discord, e.g. `/github profile username:octocat`.
+- `GitHubCommandListener` receives the command event from JDA.
+- `GitHubService` queries the GitHub REST API (profiles, repos, languages) or the GraphQL API (contribution counts) using OkHttp, with the optional `GITHUB_TOKEN` attached for authenticated rate limits.
+- The listener formats the API response into a Discord embed (stats tables, text progress bars for languages) and replies in the channel.
 
 ## Commands
 
@@ -31,7 +58,9 @@ and (with a GitHub token) total stars/commits/PRs/issues in the last year.
   per language (mirrors the "Most Used Languages" card GitHub stats widgets
   show). Fetches each repo's language stats concurrently to stay fast.
 
-## 1. Create the Discord bot
+## Getting started
+
+### 1. Create the Discord bot
 
 1. Go to https://discord.com/developers/applications → **New Application**.
 2. Go to the **Bot** tab → **Reset Token** → copy it. This is your `DISCORD_TOKEN`.
@@ -40,7 +69,7 @@ and (with a GitHub token) total stars/commits/PRs/issues in the last year.
    `applications.commands`, and under Bot Permissions check `Send Messages`
    and `Embed Links`. Open the generated URL to invite the bot to your server.
 
-## 2. Create a GitHub token (optional but recommended)
+### 2. Create a GitHub token (optional but recommended)
 
 1. https://github.com/settings/tokens → **Generate new token (classic)**.
 2. No special scopes are needed for public data: an unscoped token is fine
@@ -48,7 +77,7 @@ and (with a GitHub token) total stars/commits/PRs/issues in the last year.
 3. Without this token, `/github stats` won't work, and `/github profile` will
    be limited to 60 requests/hour instead of 5,000/hour.
 
-## 3. Configure and run
+### 3. Configure and run
 
 Copy `.env.example` to `.env` and fill in your real tokens:
 
@@ -103,7 +132,7 @@ github-discord-bot/
   (all-time commit counts aren't available via a single API call; you'd need
   to sum per-repo commit stats, which is slow and rate-limit heavy).
 
-## Developer
+## Credits
 
 **Namish Yadav**
 - GitHub: [https://github.com/p3xz](https://github.com/p3xz)
