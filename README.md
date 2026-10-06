@@ -1,5 +1,7 @@
 # GitHub Stats Bot
 
+![Preview](preview.png)
+
 > A Discord bot that looks up GitHub accounts via the GitHub API and posts their stats as an embed, so you can check GitHub stats right inside a Discord server without opening a browser.
 
 ![Status](https://img.shields.io/badge/status-active-brightgreen)
